@@ -12,10 +12,3 @@ CÓMO PUBLICAR
 5. Presiona Commit changes.
 6. En Settings > Pages, selecciona Deploy from a branch.
 7. Selecciona la rama main y la carpeta /(root), luego Save.
-8. Espera a que GitHub Pages publique la página. La dirección será similar a:
-   https://TU-USUARIO.github.io/curriculum-vitae/
-
-NOTAS
-- La descarga PDF usa una librería externa y requiere conexión a Internet.
-- Guardar utiliza localStorage: los datos quedan en el mismo navegador y dispositivo.
-- No se envían datos personales a GitHub ni a una base de datos.
