@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currículum Vitae</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#eaf0f6;margin:0;padding:20px;color:#222}
+.contenedor{max-width:850px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 3px 12px #999}
+h1{text-align:center;color:#17365d;margin-bottom:6px}
+.subtitulo{text-align:center;color:#555;margin-top:0}
+h2{background:#17365d;color:#fff;padding:10px;border-radius:5px;font-size:18px;margin-top:25px}
+label{display:block;margin-top:12px;font-weight:bold}
+input,textarea,select{width:100%;padding:10px;margin-top:5px;border:1px solid #bbb;border-radius:5px;font:inherit}
+textarea{min-height:80px;resize:vertical}
+.foto-contenedor{text-align:center;margin:20px auto}
+.foto{width:150px;height:170px;border:2px solid #17365d;border-radius:8px;object-fit:cover;display:block;margin:10px auto}
+.botones{text-align:center;margin-top:25px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+button{padding:12px 18px;border:0;border-radius:5px;color:white;cursor:pointer;font-size:14px}
+button:hover{opacity:.85}
+.guardar{background:#198754}.limpiar{background:#dc3545}.imprimir{background:#0d6efd}.descargar{background:#6f42c1}
+.ayuda{font-size:13px;color:#555;text-align:center}
+@media print{
+ body{background:white;padding:0}
+ .contenedor{box-shadow:none;padding:10px}
+ .botones,.no-pdf{display:none!important}
+ input,textarea,select{border:0;padding-left:0;appearance:none}
+ h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<div class="contenedor">
+  <div id="cvContenido">
+    <h1>CURRÍCULUM VITAE</h1>
+    <p class="subtitulo">Datos personales y profesionales</p>
+
+    <div class="foto-contenedor">
+      <img id="vistaFoto" class="foto" alt="Fotografía del postulante"
+      src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='170'%3E%3Crect width='100%25' height='100%25' fill='%23eeeeee'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23666' font-size='14'%3EFotografia%3C/text%3E%3C/svg%3E">
+      <div class="no-pdf">
+        <label for="foto">Seleccionar fotografía (JPG, PNG o WEBP; máximo 2 MB):</label>
+        <input type="file" id="foto" accept="image/jpeg,image/png,image/webp">
+      </div>
+    </div>
+
+    <h2>1. DATOS PERSONALES</h2>
+    <label for="nombre">Nombres y apellidos:</label><input type="text" id="nombre" required>
+    <label for="dni">DNI:</label><input type="text" id="dni" maxlength="8" inputmode="numeric">
+    <label for="fecha">Fecha de nacimiento:</label><input type="date" id="fecha">
+    <label for="direccion">Dirección:</label><input type="text" id="direccion">
+    <label for="telefono">Teléfono:</label><input type="tel" id="telefono">
+    <label for="correo">Correo electrónico:</label><input type="email" id="correo">
+    <label for="estado">Estado civil:</label>
+    <select id="estado"><option value="">Seleccione</option><option>Soltero(a)</option><option>Casado(a)</option><option>Conviviente</option><option>Divorciado(a)</option><option>Viudo(a)</option></select>
+
+    <h2>2. PERFIL PROFESIONAL</h2>
+    <label for="perfil">Descripción personal:</label><textarea id="perfil"></textarea>
+
+    <h2>3. FORMACIÓN ACADÉMICA</h2>
+    <label for="nivel">Nivel de estudios:</label>
+    <select id="nivel"><option value="">Seleccione</option><option>Secundaria</option><option>Técnico</option><option>Universitario</option><option>Maestría</option><option>Doctorado</option></select>
+    <label for="institucion">Institución educativa:</label><input type="text" id="institucion">
+    <label for="carrera">Carrera profesional:</label><input type="text" id="carrera">
+    <label for="egreso">Año de egreso:</label><input type="number" id="egreso" min="1950" max="2100">
+
+    <h2>4. EXPERIENCIA LABORAL</h2>
+    <label for="empresa">Empresa o institución:</label><input type="text" id="empresa">
+    <label for="cargo">Cargo desempeñado:</label><input type="text" id="cargo">
+    <label for="experiencia">Tiempo de experiencia:</label><input type="text" id="experiencia">
+    <label for="funciones">Funciones realizadas:</label><textarea id="funciones"></textarea>
+
+    <h2>5. HABILIDADES Y CONOCIMIENTOS</h2>
+    <label for="informatica">Conocimientos informáticos:</label><textarea id="informatica"></textarea>
+    <label for="idiomas">Idiomas:</label><input type="text" id="idiomas">
+    <label for="habilidades">Otras habilidades:</label><textarea id="habilidades"></textarea>
+
+    <h2>6. REFERENCIAS PERSONALES</h2>
+    <label for="referente">Nombre del referente:</label><input type="text" id="referente">
+    <label for="telreferente">Teléfono del referente:</label><input type="tel" id="telreferente">
+  </div>
+
+  <div class="botones no-pdf">
+    <button type="button" class="guardar" onclick="guardarDatos()">GUARDAR</button>
+    <button type="button" class="limpiar" onclick="limpiarDatos()">LIMPIAR</button>
+    <button type="button" class="descargar" onclick="descargarPDF()">DESCARGAR PDF</button>
+    <button type="button" class="imprimir" onclick="window.print()">IMPRIMIR</button>
+  </div>
+  <p class="ayuda no-pdf">Los datos se guardan localmente en este navegador y dispositivo.</p>
+</div>
+
+<script>
+let fotoBase64 = "";
+
+document.getElementById("foto").addEventListener("change", function(event){
+  const archivo = event.target.files[0];
+  if(!archivo) return;
+  if(!["image/jpeg","image/png","image/webp"].includes(archivo.type)){
+    alert("Seleccione una fotografía JPG, PNG o WEBP.");
+    event.target.value = "";
+    return;
+  }
+  if(archivo.size > 2*1024*1024){
+    alert("La fotografía no debe superar los 2 MB.");
+    event.target.value = "";
+    return;
+  }
+  const lector = new FileReader();
+  lector.onload = e => {
+    fotoBase64 = e.target.result;
+    document.getElementById("vistaFoto").src = fotoBase64;
+  };
+  lector.readAsDataURL(archivo);
+});
+
+function guardarDatos(){
+  const nombre = document.getElementById("nombre");
+  if(!nombre.value.trim()){
+    alert("Ingrese sus nombres y apellidos.");
+    nombre.focus();
+    return;
+  }
+  const datos = {};
+  document.querySelectorAll("#cvContenido input:not([type=file]), #cvContenido textarea, #cvContenido select").forEach(campo => {
+    datos[campo.id] = campo.value;
+  });
+  datos.fotografia = fotoBase64;
+  try{
+    localStorage.setItem("curriculum", JSON.stringify(datos));
+    alert("¡Currículum guardado correctamente en este navegador!");
+  }catch(error){
+    alert("No se pudo guardar. Pruebe con una fotografía más pequeña.");
+  }
+}
+
+window.addEventListener("load", function(){
+  const guardados = localStorage.getItem("curriculum");
+  if(!guardados) return;
+  try{
+    const datos = JSON.parse(guardados);
+    Object.keys(datos).forEach(id => {
+      if(id === "fotografia"){
+        fotoBase64 = datos[id] || "";
+        if(fotoBase64) document.getElementById("vistaFoto").src = fotoBase64;
+      }else{
+        const campo = document.getElementById(id);
+        if(campo) campo.value = datos[id];
+      }
+    });
+  }catch(error){
+    console.warn("No se pudieron recuperar los datos guardados.");
+  }
+});
+
+function limpiarDatos(){
+  if(!confirm("¿Desea eliminar todos los datos y la fotografía?")) return;
+  document.querySelectorAll("#cvContenido input:not([type=file]), #cvContenido textarea, #cvContenido select").forEach(campo => campo.value = "");
+  document.getElementById("foto").value = "";
+  fotoBase64 = "";
+  document.getElementById("vistaFoto").src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='170'%3E%3Crect width='100%25' height='100%25' fill='%23eeeeee'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23666' font-size='14'%3EFotografia%3C/text%3E%3C/svg%3E";
+  localStorage.removeItem("curriculum");
+  alert("Formulario limpiado correctamente.");
+}
+
+function descargarPDF(){
+  if(!document.getElementById("nombre").value.trim()){
+    alert("Primero ingrese sus nombres y apellidos.");
+    return;
+  }
+  if(typeof html2pdf === "undefined"){
+    alert("No se pudo cargar la herramienta PDF. Verifique su conexión a Internet.");
+    return;
+  }
+  const opciones = {
+    margin: 10,
+    filename: "Mi_Curriculum_Vitae.pdf",
+    image: {type:"jpeg", quality:0.98},
+    html2canvas: {scale:2, backgroundColor:"#ffffff"},
+    jsPDF: {unit:"mm", format:"a4", orientation:"portrait"},
+    pagebreak: {mode:["css","legacy"]}
+  };
+  html2pdf().set(opciones).from(document.getElementById("cvContenido")).save();
+}
+</script>
+</body>
+</html>
